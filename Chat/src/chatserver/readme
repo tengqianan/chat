@@ -1,0 +1,20 @@
+ 服务器端远程对象的实现：
+ 1，实现ChatServer接口，创建ChatServerImpl。在rmi中，对于远程接口的实现类的命名方式，都是接口名+Impl.
+
+ 2,在完成ChatServerImpl中，对ChatServer接口中所有方法实现之前，定义一个UserInfo类来存储用户名和远程客户端之间的对应。
+ 两个成员变量：private String name;//用户名
+            private Chatter chatter;//远程客户端对象的引用
+
+ 3，在ChatServerImpl中实现ChatServer的所有方法。声明一个成员变量，用ArrayList数组来存储所有的聊天用户。
+ 
+ 服务端界面设计：
+ 1，创建接口ChatServerListener。注意：它要从java.util.EventListener继承。EventListener是一个标签类，
+ 任何事件侦听类都要从它那继承。
+ ServerEvent函数用ChatServerEvent传递信息。ChatServerEvent是ChatServerImpl和其侦听者间传递信息的事件类，
+ 事件类必须从java.util.Event继承。
+ 
+ 2，在ChatServerImpl实现对侦听者的操作
+ 
+ 3，把ChatServerImple绑定到RMIRegistry(RMI注册器，是一个独立的服务)中，这样才能被客户端找到。这里我们要用到
+ 函数java.rmi.Naming.rebind（String name,java.rmi.Remote obj）。这个函数以name绑定名将远程对象obj
+ 注册。
